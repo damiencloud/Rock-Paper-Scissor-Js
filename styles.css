@@ -1,0 +1,469 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    --bg-gradient: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 100%);
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    
+    --color-primary: #6366f1;
+    --color-primary-glow: rgba(99, 102, 241, 0.35);
+    
+    --color-win: #10b981;
+    --color-win-glow: rgba(16, 185, 129, 0.35);
+    
+    --color-lose: #f43f5e;
+    --color-lose-glow: rgba(244, 63, 94, 0.35);
+    
+    --color-draw: #f59e0b;
+    --color-draw-glow: rgba(245, 158, 11, 0.35);
+    
+    --transition-speed: 0.3s;
+    --border-radius: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.app-container {
+    width: 90%;
+    max-width: 760px;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    animation: scaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Header */
+header {
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 50%, #4338ca 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.round-indicator {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* Scoreboard */
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.score-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+
+.score-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.score-value {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text-primary);
+    transition: transform 0.2s ease;
+}
+
+.choice-preview {
+    width: 64px;
+    height: 64px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.choice-preview.active {
+    border-style: solid;
+    border-color: var(--color-primary);
+    background: rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 15px var(--color-primary-glow);
+}
+
+.choice-preview.active.win {
+    border-color: var(--color-win);
+    background: rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 15px var(--color-win-glow);
+}
+
+.choice-preview.active.lose {
+    border-color: var(--color-lose);
+    background: rgba(244, 63, 94, 0.1);
+    box-shadow: 0 0 15px var(--color-lose-glow);
+}
+
+.vs-badge {
+    background: #0f172a;
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    font-weight: 800;
+    font-size: 0.9rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Weapons/Buttons Field */
+.weapons-section {
+    margin-bottom: 2.5rem;
+}
+
+.section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+    margin-bottom: 1.25rem;
+}
+
+.weapons-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.weapon-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.weapon-card svg {
+    width: 54px;
+    height: 54px;
+    fill: var(--text-secondary);
+    transition: all var(--transition-speed) ease;
+}
+
+.weapon-card span {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+    transition: all var(--transition-speed) ease;
+}
+
+.weapon-card:hover {
+    transform: translateY(-6px);
+    background: rgba(99, 102, 241, 0.08);
+    border-color: var(--color-primary);
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.25);
+}
+
+.weapon-card:hover svg {
+    fill: #a5b4fc;
+    transform: scale(1.1);
+}
+
+.weapon-card:hover span {
+    color: var(--text-primary);
+}
+
+.weapon-card:active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px -3px rgba(99, 102, 241, 0.2);
+}
+
+/* Result Feed */
+.result-banner {
+    min-height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 1rem;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.result-banner.win {
+    background: rgba(16, 185, 129, 0.06);
+    border-color: rgba(16, 185, 129, 0.15);
+}
+
+.result-banner.lose {
+    background: rgba(244, 63, 94, 0.06);
+    border-color: rgba(244, 63, 94, 0.15);
+}
+
+.result-banner.draw {
+    background: rgba(245, 158, 11, 0.06);
+    border-color: rgba(245, 158, 11, 0.15);
+}
+
+.result-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    transition: all 0.2s ease;
+}
+
+.result-banner.win .result-text {
+    color: #34d399;
+}
+
+.result-banner.lose .result-text {
+    color: #fb7185;
+}
+
+.result-banner.draw .result-text {
+    color: #fbbf24;
+}
+
+/* Game Over Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 3rem 2.5rem;
+    width: 90%;
+    max-width: 480px;
+    text-align: center;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
+    transform: translateY(30px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.active .modal-card {
+    transform: translateY(0);
+}
+
+.modal-emoji {
+    font-size: 4.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    animation: float 2.5s ease-in-out infinite;
+}
+
+.modal-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.modal-title.win {
+    color: #10b981;
+}
+
+.modal-title.lose {
+    color: #f43f5e;
+}
+
+.modal-title.tie {
+    color: #f59e0b;
+}
+
+.modal-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.modal-stats {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.btn-restart {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-restart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+}
+
+.btn-restart:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Animations */
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 580px) {
+    .app-container {
+        padding: 1.5rem 1.25rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .score-value {
+        font-size: 2.75rem;
+    }
+    
+    .weapons-container {
+        gap: 0.75rem;
+    }
+    
+    .weapon-card {
+        padding: 1.25rem 0.5rem;
+    }
+    
+    .weapon-card svg {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .weapon-card span {
+        font-size: 0.9rem;
+    }
+}
