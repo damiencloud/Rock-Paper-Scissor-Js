@@ -1,5 +1,3 @@
-console.log("script.js loaded successfully!");
-
 // SVG Icons for choices
 const choiceSVGs = {
     rock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32"><path d="M12 2L3 8l2 9 7 3 7-3 2-9-9-6z"/><path d="M12 2v20M3 8h18M5 17h14"/></svg>`,
@@ -50,7 +48,6 @@ function capitalize(word) {
 
 // Main game function per round
 function playRound(humanChoice) {
-    console.log("playRound called with choice:", humanChoice);
     if (currentRound >= maxRounds) return;
 
     currentRound++;
